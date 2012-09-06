@@ -39,10 +39,18 @@ class YouTubeIt
         @url = base_url
         @dev_key = params[:dev_key] if params[:dev_key]
 
-        # Return a single video (base_url + /T7YazwP8GtY)
-        return @url << "/" << params[:video_id] << "?v=2" if params[:video_id]
+		if params[:type] == 'most_popular'
+			@url << "most_popular"
+		elsif params[:type] == 'featured'
+			@url << "featured"
+		elsif params[:type] == 'most_recent'
+			@url << "most_recent"
+		elsif params[:type] == 'trending'
+			@url << "trending"
+		else
+			@url << "trending"
+		end
 
-        @url << "/-/" if (params[:categories] || params[:tags])
         @url << categories_to_params(params.delete(:categories)) if params[:categories]
         @url << tags_to_params(params.delete(:tags)) if params[:tags]
 
@@ -59,8 +67,7 @@ class YouTubeIt
       private
 
       def base_url
-#        super << "charts/movies/featured"
-		 "http://gdata.youtube.com/feeds/api/charts/movies/most_popular"
+		super << "charts/movies/"
       end
 
       def to_youtube_params

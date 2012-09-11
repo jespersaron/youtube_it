@@ -83,6 +83,7 @@ end
   request/video_upload
   request/video_search
   request/movie_search
+  request/show_search
   response/video_search
   middleware/faraday_authheader.rb
   middleware/faraday_oauth.rb

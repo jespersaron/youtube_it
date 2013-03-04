@@ -268,8 +268,9 @@ class YouTubeIt
         return YouTubeIt::Parser::ActivityParser.new(response).parse
       end
 
-      def watchlater(user)
+      def watchlater(user, opts)
         watchlater_url = "/feeds/api/users/%s/watch_later?v=2" % (user ? user : "default")
+        watchlater_url << opts.collect { |k,p| [k,p].join '=' }.join('&')
         response = yt_session.get(watchlater_url)
         
         return YouTubeIt::Parser::PlaylistFeedParser.new(response).parse
@@ -373,7 +374,7 @@ class YouTubeIt
       end
       
       def favorites(user, opts = {})
-        favorite_url = "/feeds/api/users/%s/favorites#{opts.empty? ? '' : '?#{opts.to_param}'}" % (user ? user : "default")
+        favorite_url = "/feeds/api/users/" + (user ? user : "default") + "/favorites" + (opts.empty? ? '' : ('?' + opts.to_param))
         response     = yt_session.get(favorite_url)
 
         return YouTubeIt::Parser::VideosFeedParser.new(response.body).parse

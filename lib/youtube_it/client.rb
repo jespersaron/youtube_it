@@ -214,8 +214,8 @@ class YouTubeIt
       client.get_activity(user, opts)
     end
 
-    def watchlater(user = nil)
-      client.watchlater(user)
+    def watchlater(user = nil, opts = {})
+      client.watchlater(user, opts)
     end
     
     def add_video_to_watchlater(video_id)
